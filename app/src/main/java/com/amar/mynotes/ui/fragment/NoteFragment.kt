@@ -41,8 +41,8 @@ class NoteFragment : Fragment() {
 
           // if note is to be updated
           note?.let {
-               binding.titleInputLayout.editText?.setText(it.title)
-               binding.descriptionInputLayout.editText?.setText(it.description)
+               binding.titleEditText.setText(it.title)
+               binding.descriptionEditText.setText(it.description)
                // also set text for update note/add note
                // binding.addEditTextView.setText(getResources().getString(R.string.edit_note));
           }
@@ -54,8 +54,8 @@ class NoteFragment : Fragment() {
      }
 
      private fun saveNote() {
-          val title = binding.titleInputLayout.editText?.text.toString().trim()
-          val description = binding.descriptionInputLayout.editText?.text.toString().trim()
+          val title = binding.titleEditText.text.toString().trim()
+          val description = binding.descriptionEditText.text.toString().trim()
 
           val noteToSave = note?.copy(
                timestamp = System.currentTimeMillis(),
