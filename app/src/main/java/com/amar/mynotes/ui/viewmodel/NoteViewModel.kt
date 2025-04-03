@@ -37,7 +37,6 @@ class NoteViewModel(
      fun updateNote(note: Note) {
           viewModelScope.launch {
                repo.update(note)
-               Log.d("check...", "updateNote: ")
           }
      }
 }
