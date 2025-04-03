@@ -12,6 +12,7 @@ import com.amar.mynotes.data.repository.NoteRepositoryImpl
 import com.amar.mynotes.databinding.FragmentNoteBinding
 import com.amar.mynotes.ui.viewmodel.NoteViewModel
 import com.amar.mynotes.ui.viewmodel.NoteViewModelFactory
+import com.amar.mynotes.utils.AppUtils
 
 class NoteFragment : Fragment() {
 
@@ -59,14 +60,17 @@ class NoteFragment : Fragment() {
           val noteToSave = note?.copy(
                timestamp = System.currentTimeMillis(),
                title = title,
-               description = description
+               description = description,
+               currentDateTime = AppUtils.getFormattedDateTime()
           ) ?: Note(
-                    title = title,
-                    description = description
-               )
+               title = title,
+               description = description
+          )
 
-          note?.let {
-               viewModel.updateNote(noteToSave)
-          } ?: viewModel.addNote(noteToSave)
+          if (title.isNotEmpty() || description.isNotEmpty()) {
+               note?.let {
+                    viewModel.updateNote(noteToSave)
+               } ?: viewModel.addNote(noteToSave)
+          }
      }
 }

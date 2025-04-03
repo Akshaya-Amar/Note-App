@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.amar.mynotes.common.show
 import com.amar.mynotes.data.database.Note
 import com.amar.mynotes.databinding.NoteItemBinding
 
@@ -36,10 +37,22 @@ class NoteAdapter(
           private val binding: NoteItemBinding
      ) : RecyclerView.ViewHolder(binding.root) {
           fun bind(note: Note, onItemClick: (Note) -> Unit) {
-               binding.titleTextView.text = note.title
-               binding.descriptionTextView.text = note.description
-               binding.root.setOnClickListener {
-                    onItemClick(note)
+               with(binding) {
+                    if (note.title.isNotEmpty()) {
+                         titleTextView.show()
+                         titleTextView.text = note.title
+                    }
+
+                    if (note.description.isNotEmpty()) {
+                         descriptionTextView.show()
+                         descriptionTextView.text = note.description
+                    }
+
+                    dateTimeTextView.text = note.currentDateTime
+
+                    binding.root.setOnClickListener {
+                         onItemClick(note)
+                    }
                }
           }
      }
