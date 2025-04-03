@@ -56,10 +56,17 @@ class NoteFragment : Fragment() {
           val title = binding.titleInputLayout.editText?.text.toString().trim()
           val description = binding.descriptionInputLayout.editText?.text.toString().trim()
 
-          val noteToSave = note?.copy(title = title, description = description)
-               ?: Note(title = title, description = description)
+          val noteToSave = note?.copy(
+               timestamp = System.currentTimeMillis(),
+               title = title,
+               description = description
+          ) ?: Note(
+                    title = title,
+                    description = description
+               )
 
-          note?.let { viewModel.updateNote(noteToSave)
+          note?.let {
+               viewModel.updateNote(noteToSave)
           } ?: viewModel.addNote(noteToSave)
      }
 }

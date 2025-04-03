@@ -1,14 +1,11 @@
 package com.amar.mynotes.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +15,7 @@ import com.amar.mynotes.databinding.FragmentHomeBinding
 import com.amar.mynotes.ui.adapter.NoteAdapter
 import com.amar.mynotes.ui.viewmodel.NoteViewModel
 import com.amar.mynotes.ui.viewmodel.NoteViewModelFactory
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -48,10 +46,11 @@ class HomeFragment : Fragment() {
 
           setUpRecyclerView()
 
-          lifecycleScope.launch {
-               viewModel.allNotes.observe(viewLifecycleOwner) {
-                    noteAdapter.submitList(it)
-                    Log.d("check...scroll", "onViewCreated: ")
+          viewModel.getNotes()
+          viewModel.allNotes.observe(viewLifecycleOwner) {
+               noteAdapter.submitList(it)
+               lifecycleScope.launch {
+                    delay(100)
                     binding.recyclerView.scrollToPosition(0)
                }
           }
@@ -71,10 +70,5 @@ class HomeFragment : Fragment() {
                layoutManager = LinearLayoutManager(requireContext())
                adapter = noteAdapter
           }
-     }
-
-     override fun onResume() {
-          super.onResume()
-          viewModel.getNotes()
      }
 }

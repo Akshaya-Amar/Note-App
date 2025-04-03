@@ -17,6 +17,6 @@ interface NoteDao {
      @Delete
      suspend fun delete(note: Note)
 
-     @Query("SELECT * FROM notes ORDER BY id DESC")
+     @Query("SELECT * FROM notes ORDER BY timestamp DESC")
      suspend fun getNotes(): List<Note>
 }

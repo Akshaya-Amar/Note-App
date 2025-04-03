@@ -16,10 +16,6 @@ class NoteViewModel(
      private var _allNotes = MutableLiveData<List<Note>>()
      val allNotes: LiveData<List<Note>> get() = _allNotes
 
-     /*init {
-          getNotes()
-     }*/
-
      fun getNotes() {
           viewModelScope.launch {
                val notes = repo.getAllNotes()
