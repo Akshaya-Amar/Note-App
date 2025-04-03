@@ -31,8 +31,6 @@ class NoteViewModel(
      fun addNote(note: Note) {
           viewModelScope.launch {
                repo.add(note)
-               Log.d("check...", "addNote: ")
-//               getNotes() // should it be here?
           }
      }
 
@@ -40,7 +38,6 @@ class NoteViewModel(
           viewModelScope.launch {
                repo.update(note)
                Log.d("check...", "updateNote: ")
-//               getNotes() // should it be here?
           }
      }
 }
