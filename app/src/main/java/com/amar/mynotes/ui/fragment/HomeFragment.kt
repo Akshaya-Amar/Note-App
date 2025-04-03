@@ -46,7 +46,6 @@ class HomeFragment : Fragment() {
 
           setUpRecyclerView()
 
-          viewModel.getNotes()
           viewModel.allNotes.observe(viewLifecycleOwner) {
                noteAdapter.submitList(it)
                lifecycleScope.launch {

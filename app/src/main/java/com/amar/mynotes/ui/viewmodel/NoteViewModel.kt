@@ -13,16 +13,7 @@ class NoteViewModel(
      private val repo: NoteRepository
 ) : ViewModel() {
 
-     private var _allNotes = MutableLiveData<List<Note>>()
-     val allNotes: LiveData<List<Note>> get() = _allNotes
-
-     fun getNotes() {
-          viewModelScope.launch {
-               val notes = repo.getAllNotes()
-               Log.d("check...", "getNotes")
-               _allNotes.postValue(notes)
-          }
-     }
+     val allNotes: LiveData<List<Note>> = repo.getAllNotes()
 
      fun addNote(note: Note) {
           viewModelScope.launch {

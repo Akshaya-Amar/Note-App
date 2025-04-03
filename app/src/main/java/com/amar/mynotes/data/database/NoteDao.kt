@@ -1,5 +1,6 @@
 package com.amar.mynotes.data.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -18,5 +19,5 @@ interface NoteDao {
      suspend fun delete(note: Note)
 
      @Query("SELECT * FROM notes ORDER BY timestamp DESC")
-     suspend fun getNotes(): List<Note>
+     fun getNotes(): LiveData<List<Note>>
 }

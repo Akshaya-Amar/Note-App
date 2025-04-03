@@ -1,6 +1,7 @@
 package com.amar.mynotes.data.repository
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import com.amar.mynotes.data.database.Note
 import com.amar.mynotes.data.database.NoteDao
 import com.amar.mynotes.data.database.NoteDatabase
@@ -22,7 +23,7 @@ class NoteRepositoryImpl(
           noteDao.delete(note)
      }
 
-     override suspend fun getAllNotes(): List<Note> {
+     override fun getAllNotes(): LiveData<List<Note>> {
           return noteDao.getNotes()
      }
 }
