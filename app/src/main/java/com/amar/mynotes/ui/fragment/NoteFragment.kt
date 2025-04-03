@@ -2,7 +2,6 @@ package com.amar.mynotes.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -84,10 +83,8 @@ class NoteFragment : Fragment() {
           val oldDescription = note?.description
 
           if (oldTitle?.equals(title) == true && oldDescription?.equals(description) == true) {
-               Log.d("check....if inside", "saveNote: ")
                return
           }
-          Log.d("check....if outside", "saveNote: ")
 
           if (title.isEmpty() && description.isEmpty()) {
                return
