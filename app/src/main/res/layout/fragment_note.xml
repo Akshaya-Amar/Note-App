@@ -6,6 +6,10 @@
     android:orientation="vertical"
     tools:context=".ui.fragment.NoteFragment">
 
+    <include
+        android:id="@+id/custom_toolbar"
+        layout="@layout/custom_toolbar" />
+
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/title_edit_text"
         android:layout_width="match_parent"

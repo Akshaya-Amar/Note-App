@@ -1,8 +1,6 @@
 package com.amar.mynotes.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amar.mynotes.data.database.Note

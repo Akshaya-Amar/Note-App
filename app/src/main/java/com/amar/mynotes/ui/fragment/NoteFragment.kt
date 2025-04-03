@@ -1,12 +1,17 @@
 package com.amar.mynotes.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.amar.mynotes.R
+import com.amar.mynotes.common.showSnackBar
 import com.amar.mynotes.data.database.Note
 import com.amar.mynotes.data.repository.NoteRepositoryImpl
 import com.amar.mynotes.databinding.FragmentNoteBinding
@@ -23,7 +28,9 @@ class NoteFragment : Fragment() {
      }
 
      private val args: NoteFragmentArgs by navArgs()
-     private var note: Note? = null
+     private val note: Note? by lazy {
+          args.note
+     }
 
      override fun onCreateView(
           inflater: LayoutInflater,
@@ -36,21 +43,40 @@ class NoteFragment : Fragment() {
 
      override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
           super.onViewCreated(view, savedInstanceState)
+          setupToolbar()
+          setupNoteFields()
+     }
 
-          note = args.note
-
-          // if note is to be updated
+     private fun setupNoteFields() {
           note?.let {
                binding.titleEditText.setText(it.title)
                binding.descriptionEditText.setText(it.description)
-               // also set text for update note/add note
-               // binding.addEditTextView.setText(getResources().getString(R.string.edit_note));
           }
      }
 
-     override fun onPause() {
-          super.onPause()
-          saveNote()
+     private fun setupToolbar() {
+          binding.customToolbar.apply {
+               toolbarTitle.text = if (note != null) {
+                    getString(R.string.update_note)
+               } else {
+                    getString(R.string.add_note)
+               }
+
+               toolbarBackArrow.setOnClickListener {
+                    findNavController().navigateUp()
+               }
+
+               toolbarSaveIcon.setOnClickListener {
+                    hideKeyboard()
+                    removeFocus()
+                    saveNote()
+                    showSnackBar()
+               }
+          }
+     }
+
+     private fun showSnackBar() {
+          binding.root.showSnackBar("Note Saved")
      }
 
      private fun saveNote() {
@@ -72,5 +98,28 @@ class NoteFragment : Fragment() {
                     viewModel.updateNote(noteToSave)
                } ?: viewModel.addNote(noteToSave)
           }
+     }
+
+     private fun removeFocus() {
+          with(binding) {
+               if (titleEditText.hasFocus()) {
+                    titleEditText.clearFocus()
+               }
+
+               if (descriptionEditText.hasFocus()) {
+                    descriptionEditText.clearFocus()
+               }
+          }
+     }
+
+     private fun hideKeyboard() {
+          val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+          val view = requireActivity().currentFocus ?: View(requireContext())
+          inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+     }
+
+     override fun onPause() {
+          super.onPause()
+          saveNote()
      }
 }
