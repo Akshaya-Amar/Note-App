@@ -2,6 +2,7 @@ package com.amar.mynotes.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,6 +64,7 @@ class NoteFragment : Fragment() {
                }
 
                toolbarBackArrow.setOnClickListener {
+                    saveNote()
                     findNavController().navigateUp()
                }
 
@@ -70,18 +72,26 @@ class NoteFragment : Fragment() {
                     hideKeyboard()
                     removeFocus()
                     saveNote()
-                    showSnackBar()
                }
           }
-     }
-
-     private fun showSnackBar() {
-          binding.root.showSnackBar("Note Saved")
      }
 
      private fun saveNote() {
           val title = binding.titleEditText.text.toString().trim()
           val description = binding.descriptionEditText.text.toString().trim()
+
+          val oldTitle = note?.title
+          val oldDescription = note?.description
+
+          if (oldTitle?.equals(title) == true && oldDescription?.equals(description) == true) {
+               Log.d("check....if inside", "saveNote: ")
+               return
+          }
+          Log.d("check....if outside", "saveNote: ")
+
+          if (title.isEmpty() && description.isEmpty()) {
+               return
+          }
 
           val noteToSave = note?.copy(
                timestamp = System.currentTimeMillis(),
@@ -93,11 +103,17 @@ class NoteFragment : Fragment() {
                description = description
           )
 
-          if (title.isNotEmpty() || description.isNotEmpty()) {
-               note?.let {
-                    viewModel.updateNote(noteToSave)
-               } ?: viewModel.addNote(noteToSave)
+          note?.let {
+               viewModel.updateNote(noteToSave)
+               showSnackBar("Note updated")
+          } ?: run {
+               viewModel.addNote(noteToSave)
+               showSnackBar("Note saved")
           }
+     }
+
+     private fun showSnackBar(message: String) {
+          binding.root.showSnackBar(message)
      }
 
      private fun removeFocus() {
@@ -113,7 +129,8 @@ class NoteFragment : Fragment() {
      }
 
      private fun hideKeyboard() {
-          val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+          val inputMethodManager =
+               requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
           val view = requireActivity().currentFocus ?: View(requireContext())
           inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
      }

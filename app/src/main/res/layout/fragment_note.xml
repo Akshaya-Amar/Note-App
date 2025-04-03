@@ -30,7 +30,6 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/outline_border"
-        android:drawableTint="@color/purple_500"
         android:gravity="start"
         android:hint="@string/message"
         android:padding="10dp" />
