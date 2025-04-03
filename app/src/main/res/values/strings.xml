@@ -6,4 +6,7 @@
     <string name="title">Title</string>
     <string name="update_note">Update Note</string>
     <string name="add_note">Add Note</string>
+    <string name="search_for_notes">Search for notes</string>
+    <string name="navigate_to_home_page">Navigate to Home Page</string>
+    <string name="save_note">Save Note</string>
 </resources>
