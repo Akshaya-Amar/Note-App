@@ -34,6 +34,5 @@
         android:fontFamily="@font/manrope_regular"
         android:gravity="start"
         android:hint="@string/message"
-        android:inputType="textCapSentences"
         android:padding="10dp" />
 </LinearLayout>
