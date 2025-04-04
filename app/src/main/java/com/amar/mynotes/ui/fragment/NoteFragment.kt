@@ -63,7 +63,6 @@ class NoteFragment : Fragment() {
                }
 
                toolbarBackArrow.setOnClickListener {
-                    saveNote()
                     findNavController().navigateUp()
                }
 
