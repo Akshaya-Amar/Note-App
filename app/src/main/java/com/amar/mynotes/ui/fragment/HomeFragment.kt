@@ -1,6 +1,8 @@
 package com.amar.mynotes.ui.fragment
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +23,7 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment() {
 
      private lateinit var binding: FragmentHomeBinding
+     private lateinit var allNotes: List<Note>
      private val viewModel: NoteViewModel by viewModels {
           val noteRepository = NoteRepositoryImpl(requireContext().applicationContext)
           NoteViewModelFactory(noteRepository)
@@ -46,17 +49,45 @@ class HomeFragment : Fragment() {
 
           setUpRecyclerView()
 
-          viewModel.allNotes.observe(viewLifecycleOwner) {
-               noteAdapter.submitList(it)
-               lifecycleScope.launch {
-                    delay(100)
-                    binding.recyclerView.scrollToPosition(0)
-               }
+          viewModel.allNotes.observe(viewLifecycleOwner) { notes ->
+               allNotes = notes
+               noteAdapter.submitList(notes)
+               scrollToTop()
           }
+
+          binding.searchTextInputLayout.editText?.addTextChangedListener(createSearchTextWatcher())
 
           binding.floatingActionButton.setOnClickListener {
                navigateToNoteFragment()
           }
+     }
+
+     private fun createSearchTextWatcher() = object : TextWatcher {
+          override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+          override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+          override fun afterTextChanged(s: Editable?) {
+               filterNotes(s)
+          }
+     }
+
+     private fun scrollToTop() {
+          lifecycleScope.launch {
+               delay(100)
+               binding.recyclerView.scrollToPosition(0)
+          }
+     }
+
+     private fun filterNotes(editable: Editable?) {
+          val query = editable.toString().trim()
+          val filteredNotes = if (query.isEmpty()) {
+               allNotes
+          } else {
+               allNotes.filter { note ->
+                    note.title.contains(query, ignoreCase = true) || note.description.contains(query, ignoreCase = true)
+               }
+          }
+
+          noteAdapter.submitList(filteredNotes)
      }
 
      private fun navigateToNoteFragment(note: Note? = null) {
