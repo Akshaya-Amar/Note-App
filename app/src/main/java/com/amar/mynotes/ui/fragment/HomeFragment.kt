@@ -22,6 +22,7 @@ import com.amar.mynotes.ui.adapter.NoteAdapter
 import com.amar.mynotes.ui.adapter.SwipeToDeleteCallback
 import com.amar.mynotes.ui.viewmodel.NoteViewModel
 import com.amar.mynotes.ui.viewmodel.NoteViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -67,11 +68,34 @@ class HomeFragment : Fragment() {
           }
      }
 
+     private fun navigateToNoteFragment(note: Note? = null) {
+          val action = HomeFragmentDirections.actionHomeFragmentToNoteFragment(note)
+          findNavController().navigate(action)
+     }
+
      private fun createSearchTextWatcher() = object : TextWatcher {
           override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
           override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-          override fun afterTextChanged(s: Editable?) {
-               filterNotes(s)
+          override fun afterTextChanged(s: Editable?) = filterNotes(s)
+     }
+
+     private fun filterNotes(editable: Editable?) {
+          val query = editable.toString().trim()
+          if (query.isEmpty()) {
+               binding.noItemsFoundText.hide()
+               noteAdapter.submitList(allNotes)
+          } else {
+               val filteredNotes = allNotes.filter { note ->
+                    note.title.contains(query, ignoreCase = true) || note.description.contains(query, ignoreCase = true)
+               }
+
+               if (filteredNotes.isEmpty()) {
+                    binding.noItemsFoundText.show()
+               } else {
+                    binding.noItemsFoundText.hide()
+               }
+
+               noteAdapter.submitList(filteredNotes)
           }
      }
 
@@ -80,29 +104,6 @@ class HomeFragment : Fragment() {
                delay(100)
                binding.recyclerView.scrollToPosition(0)
           }
-     }
-
-     private fun filterNotes(editable: Editable?) {
-          val query = editable.toString().trim()
-          val filteredNotes = if (query.isEmpty()) {
-               allNotes
-          } else {
-               allNotes.filter { note ->
-                    note.title.contains(query, ignoreCase = true) || note.description.contains(query, ignoreCase = true)
-               }
-          }
-
-          if (filteredNotes.isEmpty()) {
-               binding.noItemsFoundText.show()
-          } else {
-               binding.noItemsFoundText.hide()
-          }
-          noteAdapter.submitList(filteredNotes)
-     }
-
-     private fun navigateToNoteFragment(note: Note? = null) {
-          val action = HomeFragmentDirections.actionHomeFragmentToNoteFragment(note)
-          findNavController().navigate(action)
      }
 
      private fun setUpRecyclerView() {
@@ -117,6 +118,11 @@ class HomeFragment : Fragment() {
      private val swipeToDeleteCallback = SwipeToDeleteCallback { position ->
           val note = allNotes[position]
           viewModel.deleteNote(note)
-          binding.root.showSnackBar("Note deleted")
+          binding.root.showSnackBar(
+               message = "Note deleted",
+               duration = Snackbar.LENGTH_LONG,
+               actionLabel = "UNDO",
+               actionCallback = { viewModel.addNote(note) }
+          )
      }
 }
