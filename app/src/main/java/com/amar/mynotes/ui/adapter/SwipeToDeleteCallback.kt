@@ -1,4 +1,4 @@
-package com.amar.mynotes.common
+package com.amar.mynotes.ui.adapter
 
 import android.graphics.Canvas
 import android.graphics.Paint

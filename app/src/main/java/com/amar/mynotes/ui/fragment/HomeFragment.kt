@@ -12,12 +12,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.amar.mynotes.common.SwipeToDeleteCallback
+import com.amar.mynotes.common.hide
+import com.amar.mynotes.common.show
 import com.amar.mynotes.common.showSnackBar
 import com.amar.mynotes.data.database.Note
 import com.amar.mynotes.data.repository.NoteRepositoryImpl
 import com.amar.mynotes.databinding.FragmentHomeBinding
 import com.amar.mynotes.ui.adapter.NoteAdapter
+import com.amar.mynotes.ui.adapter.SwipeToDeleteCallback
 import com.amar.mynotes.ui.viewmodel.NoteViewModel
 import com.amar.mynotes.ui.viewmodel.NoteViewModelFactory
 import kotlinx.coroutines.delay
@@ -90,6 +92,11 @@ class HomeFragment : Fragment() {
                }
           }
 
+          if (filteredNotes.isEmpty()) {
+               binding.noItemsFoundText.show()
+          } else {
+               binding.noItemsFoundText.hide()
+          }
           noteAdapter.submitList(filteredNotes)
      }
 

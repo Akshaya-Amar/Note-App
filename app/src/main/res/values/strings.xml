@@ -9,4 +9,5 @@
     <string name="search_for_notes">Search for notes</string>
     <string name="navigate_to_home_page">Navigate to Home Page</string>
     <string name="save_note">Save Note</string>
+    <string name="no_items_found">No items found</string>
 </resources>
