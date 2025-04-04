@@ -10,7 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.amar.mynotes.common.SwipeToDeleteCallback
+import com.amar.mynotes.common.showSnackBar
 import com.amar.mynotes.data.database.Note
 import com.amar.mynotes.data.repository.NoteRepositoryImpl
 import com.amar.mynotes.databinding.FragmentHomeBinding
@@ -100,5 +103,13 @@ class HomeFragment : Fragment() {
                layoutManager = LinearLayoutManager(requireContext())
                adapter = noteAdapter
           }
+
+          ItemTouchHelper(swipeToDeleteCallback).attachToRecyclerView(binding.recyclerView)
+     }
+
+     private val swipeToDeleteCallback = SwipeToDeleteCallback { position ->
+          val note = allNotes[position]
+          viewModel.deleteNote(note)
+          binding.root.showSnackBar("Note deleted")
      }
 }

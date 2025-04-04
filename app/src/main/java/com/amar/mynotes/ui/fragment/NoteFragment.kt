@@ -126,8 +126,7 @@ class NoteFragment : Fragment() {
      }
 
      private fun hideKeyboard() {
-          val inputMethodManager =
-               requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+          val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
           val view = requireActivity().currentFocus ?: View(requireContext())
           inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
      }

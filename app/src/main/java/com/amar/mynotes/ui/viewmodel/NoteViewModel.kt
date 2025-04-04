@@ -24,4 +24,10 @@ class NoteViewModel(
                repo.update(note)
           }
      }
+
+     fun deleteNote(note: Note) {
+          viewModelScope.launch {
+               repo.delete(note)
+          }
+     }
 }
