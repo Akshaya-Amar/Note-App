@@ -52,8 +52,7 @@ class SwipeToDeleteCallback(
      }
 
      private fun drawDeleteIcon(canvas: Canvas, itemView: View, dX: Float) {
-          val delIcon: Drawable? =
-               ContextCompat.getDrawable(itemView.context, R.drawable.baseline_delete_white_48)
+          val delIcon: Drawable? = ContextCompat.getDrawable(itemView.context, R.drawable.baseline_delete_white_48)
           delIcon?.let { deleteIcon ->
                val iconMargin = 20
                val iconWidth = deleteIcon.intrinsicWidth / 1.5f
@@ -62,7 +61,7 @@ class SwipeToDeleteCallback(
                val iconLeft: Float
                val iconTop: Float
                if (dX < 0) {
-                    iconLeft = itemView.right + dX + iconMargin.toFloat()
+                    iconLeft = itemView.right - iconWidth - iconMargin.toFloat()
                     iconTop = itemView.top + (itemView.height - iconHeight) / 2f
                } else {
                     iconLeft = itemView.left + iconMargin.toFloat()
