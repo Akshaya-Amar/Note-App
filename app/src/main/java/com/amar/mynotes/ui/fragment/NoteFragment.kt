@@ -28,9 +28,7 @@ class NoteFragment : Fragment() {
      }
 
      private val args: NoteFragmentArgs by navArgs()
-     private val note: Note? by lazy {
-          args.note
-     }
+     private var initialNote: Note? = null
 
      override fun onCreateView(
           inflater: LayoutInflater,
@@ -43,12 +41,13 @@ class NoteFragment : Fragment() {
 
      override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
           super.onViewCreated(view, savedInstanceState)
+          initialNote = args.note
           setupToolbar()
           setupNoteFields()
      }
 
      private fun setupNoteFields() {
-          note?.let {
+          initialNote?.let {
                binding.titleEditText.setText(it.title)
                binding.descriptionEditText.setText(it.description)
           }
@@ -56,7 +55,7 @@ class NoteFragment : Fragment() {
 
      private fun setupToolbar() {
           binding.customToolbar.apply {
-               toolbarTitle.text = if (note != null) {
+               toolbarTitle.text = if (initialNote != null) {
                     getString(R.string.update_note)
                } else {
                     getString(R.string.add_note)
@@ -78,18 +77,11 @@ class NoteFragment : Fragment() {
           val title = binding.titleEditText.text.toString().trim()
           val description = binding.descriptionEditText.text.toString().trim()
 
-          val oldTitle = note?.title
-          val oldDescription = note?.description
-
-          if (oldTitle?.equals(title) == true && oldDescription?.equals(description) == true) {
-               return
-          }
-
           if (title.isEmpty() && description.isEmpty()) {
                return
           }
 
-          val noteToSave = note?.copy(
+          val noteToSave = initialNote?.copy(
                timestamp = System.currentTimeMillis(),
                title = title,
                description = description,
@@ -99,13 +91,15 @@ class NoteFragment : Fragment() {
                description = description
           )
 
-          note?.let {
+          initialNote?.let {
                viewModel.updateNote(noteToSave)
                showSnackBar("Note updated")
           } ?: run {
                viewModel.addNote(noteToSave)
                showSnackBar("Note saved")
           }
+
+          initialNote = noteToSave
      }
 
      private fun showSnackBar(message: String) {
@@ -132,6 +126,14 @@ class NoteFragment : Fragment() {
 
      override fun onPause() {
           super.onPause()
-          saveNote()
+          if (hasChanges()) {
+               saveNote()
+          }
+     }
+
+     private fun hasChanges(): Boolean {
+          val title = binding.titleEditText.text.toString().trim()
+          val description = binding.descriptionEditText.text.toString().trim()
+          return (title != initialNote?.title) || (description != initialNote?.description)
      }
 }
