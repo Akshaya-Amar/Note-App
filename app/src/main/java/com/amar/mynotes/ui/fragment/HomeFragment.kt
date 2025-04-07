@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.amar.mynotes.R
 import com.amar.mynotes.common.hide
 import com.amar.mynotes.common.show
 import com.amar.mynotes.common.showSnackBar
@@ -119,9 +120,9 @@ class HomeFragment : Fragment() {
           val note = allNotes[position]
           viewModel.deleteNote(note)
           binding.root.showSnackBar(
-               message = "Note deleted",
+               message = getString(R.string.note_deleted),
                duration = Snackbar.LENGTH_LONG,
-               actionLabel = "UNDO",
+               actionLabel = getString(R.string.undo),
                actionCallback = { viewModel.addNote(note) }
           )
      }

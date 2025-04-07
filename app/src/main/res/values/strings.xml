@@ -10,4 +10,8 @@
     <string name="navigate_to_home_page">Navigate to Home Page</string>
     <string name="save_note">Save Note</string>
     <string name="no_items_found">No items found</string>
+    <string name="note_saved">Note saved</string>
+    <string name="note_updated">Note updated</string>
+    <string name="note_deleted">Note deleted</string>
+    <string name="undo">UNDO</string>
 </resources>

@@ -41,7 +41,7 @@ class NoteFragment : Fragment() {
 
      override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
           super.onViewCreated(view, savedInstanceState)
-          initialNote = args.note
+          getInitialNote()
           setupToolbar()
           setupNoteFields()
      }
@@ -73,6 +73,10 @@ class NoteFragment : Fragment() {
           }
      }
 
+     private fun getInitialNote() {
+          initialNote = args.note
+     }
+
      private fun saveNote() {
           val title = binding.titleEditText.text.toString().trim()
           val description = binding.descriptionEditText.text.toString().trim()
@@ -93,10 +97,10 @@ class NoteFragment : Fragment() {
 
           initialNote?.let {
                viewModel.updateNote(noteToSave)
-               showSnackBar("Note updated")
+               showSnackBar(getString(R.string.note_updated))
           } ?: run {
                viewModel.addNote(noteToSave)
-               showSnackBar("Note saved")
+               showSnackBar(getString(R.string.note_saved))
           }
 
           initialNote = noteToSave
