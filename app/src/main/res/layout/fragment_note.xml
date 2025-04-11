@@ -23,6 +23,11 @@
         android:maxLines="1"
         android:padding="10dp" />
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/description_edit_text"
         android:layout_width="match_parent"
@@ -34,5 +39,7 @@
         android:fontFamily="@font/manrope_regular"
         android:gravity="start"
         android:hint="@string/message"
+        android:inputType="textCapSentences|textMultiLine"
         android:padding="10dp" />
+        </androidx.core.widget.NestedScrollView>
 </LinearLayout>
