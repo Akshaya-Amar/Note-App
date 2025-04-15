@@ -111,9 +111,8 @@ class HomeFragment : Fragment() {
           binding.recyclerView.apply {
                layoutManager = LinearLayoutManager(requireContext())
                adapter = noteAdapter
+               ItemTouchHelper(swipeToDeleteCallback).attachToRecyclerView(this)
           }
-
-          ItemTouchHelper(swipeToDeleteCallback).attachToRecyclerView(binding.recyclerView)
      }
 
      private val swipeToDeleteCallback = SwipeToDeleteCallback { position ->
