@@ -18,19 +18,14 @@ object AppModule {
 
      @Provides
      @Singleton
-     fun provideNoteDatabase(@ApplicationContext context: Context): NoteDatabase {
-          return NoteDatabase.getInstance(context)
-     }
+     fun provideNoteDatabase(@ApplicationContext context: Context): NoteDatabase = NoteDatabase.getInstance(context)
 
      @Provides
      @Singleton
-     fun provideNoteDao(database: NoteDatabase): NoteDao {
-          return database.noteDao()
-     }
+     fun provideNoteDao(database: NoteDatabase): NoteDao = database.noteDao()
 
      @Provides
      @Singleton
-     fun provideNoteRepository(noteDao: NoteDao): NoteRepository {
-          return NoteRepositoryImpl(noteDao)
-     }
+     fun provideNoteRepository(noteDao: NoteDao): NoteRepository = NoteRepositoryImpl(noteDao)
+
 }

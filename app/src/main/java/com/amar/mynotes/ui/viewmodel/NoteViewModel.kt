@@ -13,24 +13,8 @@ import javax.inject.Inject
 class NoteViewModel @Inject constructor(
      private val repo: NoteRepository
 ) : ViewModel() {
-
      val allNotes: LiveData<List<Note>> = repo.getAllNotes()
-
-     fun addNote(note: Note) {
-          viewModelScope.launch {
-               repo.add(note)
-          }
-     }
-
-     fun updateNote(note: Note) {
-          viewModelScope.launch {
-               repo.update(note)
-          }
-     }
-
-     fun deleteNote(note: Note) {
-          viewModelScope.launch {
-               repo.delete(note)
-          }
-     }
+     fun addNote(note: Note) = viewModelScope.launch { repo.add(note) }
+     fun updateNote(note: Note) = viewModelScope.launch { repo.update(note) }
+     fun deleteNote(note: Note) = viewModelScope.launch { repo.delete(note) }
 }

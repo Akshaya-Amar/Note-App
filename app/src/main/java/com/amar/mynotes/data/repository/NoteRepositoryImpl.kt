@@ -10,19 +10,8 @@ import javax.inject.Singleton
 class NoteRepositoryImpl @Inject constructor(
      private val noteDao: NoteDao
 ) : NoteRepository {
-     override suspend fun add(note: Note) {
-          noteDao.add(note)
-     }
-
-     override suspend fun update(note: Note) {
-          noteDao.update(note)
-     }
-
-     override suspend fun delete(note: Note) {
-          noteDao.delete(note)
-     }
-
-     override fun getAllNotes(): LiveData<List<Note>> {
-          return noteDao.getNotes()
-     }
+     override suspend fun add(note: Note) = noteDao.add(note)
+     override suspend fun update(note: Note) = noteDao.update(note)
+     override suspend fun delete(note: Note) = noteDao.delete(note)
+     override fun getAllNotes(): LiveData<List<Note>> = noteDao.getNotes()
 }
