@@ -1,15 +1,14 @@
 package com.amar.mynotes.data.repository
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import com.amar.mynotes.data.database.Note
 import com.amar.mynotes.data.database.NoteDao
-import com.amar.mynotes.data.database.NoteDatabase
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NoteRepositoryImpl(
-     private val context: Context,
-     private val database: NoteDatabase = NoteDatabase.getInstance(context),
-     private val noteDao: NoteDao = database.noteDao()
+@Singleton
+class NoteRepositoryImpl @Inject constructor(
+     private val noteDao: NoteDao
 ) : NoteRepository {
      override suspend fun add(note: Note) {
           noteDao.add(note)

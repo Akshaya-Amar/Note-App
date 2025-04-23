@@ -13,20 +13,16 @@ import androidx.navigation.fragment.navArgs
 import com.amar.mynotes.R
 import com.amar.mynotes.common.showSnackBar
 import com.amar.mynotes.data.database.Note
-import com.amar.mynotes.data.repository.NoteRepositoryImpl
 import com.amar.mynotes.databinding.FragmentNoteBinding
 import com.amar.mynotes.ui.viewmodel.NoteViewModel
-import com.amar.mynotes.ui.viewmodel.NoteViewModelFactory
 import com.amar.mynotes.utils.AppUtils
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NoteFragment : Fragment() {
 
      private lateinit var binding: FragmentNoteBinding
-     private val viewModel: NoteViewModel by viewModels {
-          val noteRepository = NoteRepositoryImpl(requireContext().applicationContext)
-          NoteViewModelFactory(noteRepository)
-     }
-
+     private val viewModel: NoteViewModel by viewModels()
      private val args: NoteFragmentArgs by navArgs()
      private var initialNote: Note? = null
 

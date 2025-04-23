@@ -17,24 +17,21 @@ import com.amar.mynotes.common.hide
 import com.amar.mynotes.common.show
 import com.amar.mynotes.common.showSnackBar
 import com.amar.mynotes.data.database.Note
-import com.amar.mynotes.data.repository.NoteRepositoryImpl
 import com.amar.mynotes.databinding.FragmentHomeBinding
 import com.amar.mynotes.ui.adapter.NoteAdapter
 import com.amar.mynotes.ui.adapter.SwipeToDeleteCallback
 import com.amar.mynotes.ui.viewmodel.NoteViewModel
-import com.amar.mynotes.ui.viewmodel.NoteViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
      private lateinit var binding: FragmentHomeBinding
      private lateinit var allNotes: List<Note>
-     private val viewModel: NoteViewModel by viewModels {
-          val noteRepository = NoteRepositoryImpl(requireContext().applicationContext)
-          NoteViewModelFactory(noteRepository)
-     }
+     private val viewModel: NoteViewModel by viewModels()
 
      private val noteAdapter by lazy {
           NoteAdapter { note ->
