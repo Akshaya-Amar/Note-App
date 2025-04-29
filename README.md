@@ -4,7 +4,7 @@ This app demonstrates a modern approach to Android development by leveraging **K
 
 This project is implemented entirely in Kotlin and follows modern Android development practices to provide a smooth and efficient user experience. Below are the key features and technologies used in the app:
 
-### Key Features:</u>
+### # Key Features:</u>
 **Note Management:** The app allows users to create, update, and delete personal notes. It integrates with a Room database to persist data.
 
 **Search Functionality:** Search through your notes to quickly find the information you're looking for.
@@ -14,8 +14,9 @@ This project is implemented entirely in Kotlin and follows modern Android develo
 **Undo Option:** A feature designed to enhance the user experience by providing an easy way to revert accidental changes.
 
 **User Interface:** Clean and intuitive UI, built with ViewBinding to provide an efficient way to work with views and reduce boilerplate code.
+<br><br>
 
-### Technologies and Components:
+### # Technologies and Components:
 
 **MVVM Architecture:** The app follows the Model-View-ViewModel (MVVM) architecture to ensure a clean separation of concerns, making the codebase more maintainable and testable.
 
@@ -32,8 +33,9 @@ This project is implemented entirely in Kotlin and follows modern Android develo
 **Kotlin Coroutines:** Used for asynchronous programming, allowing for non-blocking operations and improving the app's responsiveness.
 
 **Extension Functions:** These functions help keep the codebase concise and readable by extending existing classes with new functionality.
+<br><br>
 
-### Architecture & Design Choices:
+### # Architecture & Design Choices:
 **Single Activity Architecture:** A modern Android architecture where all fragments are hosted within a single activity, improving navigation consistency.
 
 **Room Database:** The app uses Room as the local database solution for storing notes, with migrations in place to handle future changes to the schema.
