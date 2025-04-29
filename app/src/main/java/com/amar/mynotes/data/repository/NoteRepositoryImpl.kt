@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import com.amar.mynotes.data.database.Note
 import com.amar.mynotes.data.database.NoteDao
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class NoteRepositoryImpl @Inject constructor(
      private val noteDao: NoteDao
 ) : NoteRepository {

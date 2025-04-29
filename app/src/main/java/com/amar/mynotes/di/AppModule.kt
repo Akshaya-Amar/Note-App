@@ -5,8 +5,6 @@ import androidx.room.Room
 import com.amar.mynotes.data.database.Migrations.MIGRATION_1_2
 import com.amar.mynotes.data.database.NoteDao
 import com.amar.mynotes.data.database.NoteDatabase
-import com.amar.mynotes.data.repository.NoteRepository
-import com.amar.mynotes.data.repository.NoteRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,8 +31,4 @@ object AppModule {
      @Provides
      @Singleton
      fun provideNoteDao(database: NoteDatabase): NoteDao = database.noteDao()
-
-     @Provides
-     @Singleton
-     fun provideNoteRepository(noteDao: NoteDao): NoteRepository = NoteRepositoryImpl(noteDao)
 }
